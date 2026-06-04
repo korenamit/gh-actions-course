@@ -3,8 +3,10 @@ name: 03 - Workflow Runners
 on: push
 
 jobs:  
-    echo:
+    ubuntu-echo:
         runs-on: ubuntu-latest
         steps:
             - name: Show OS 
-              run: echo "I'm running on a ${{ runner.os }} runner provided by GitHub Actions."
+              run: |
+                echo "Running ubuntu runner."
+                echo "Runner OS: $RUNNER_OS"
