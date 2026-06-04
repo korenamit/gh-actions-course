@@ -18,3 +18,11 @@ jobs:
               run: |
                 echo "Running windows runner."
                 echo "Runner OS: $RUNNER_OS"
+    mac-echo:
+        runs-on: mac-latest
+        steps:
+            - name: Show OS 
+              shell: bash
+              run: |
+                echo "Running mac runner."
+                echo "Runner OS: $RUNNER_OS"
