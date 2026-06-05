@@ -23,3 +23,5 @@ jobs:
             # 2. Execute automated tests
             - name: Run Unit Tests
               run: npm test
+              working-directory: ./04-using-actions/react-app
+              
