@@ -9,10 +9,14 @@ jobs:
             # 0. Checkout the code from the repository
             - name: Checkout Code
               uses: actions/checkout@v4
-            - name: Printing Folders
-              run: ls -la
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                node-version: '20.x'
             # 1. Install deps of our react app
-
+            - name: Install Dependencies
+              run: npm ci   
+              working-directory: 04-using-actions/react-app
             # 2. Execute automated tests
-              
-            
+            #- name: Run Tests
+            #  run: npm test
