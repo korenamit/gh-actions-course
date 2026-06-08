@@ -17,8 +17,8 @@ on:
                     - v5                           
                 default: v1
 env:
-    MY_WORKFLOW_VAR: "workflow"
-    MY_OVERWRITTEN_VAR: "workflow"
+    MY_WORKFLOW_VAR: "workflow_orig"
+    MY_OVERWRITTEN_VAR: "workflow_overwrite"
 jobs:
     echo-data:
         runs-on: ubuntu-latest
