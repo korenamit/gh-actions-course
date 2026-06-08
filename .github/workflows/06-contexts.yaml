@@ -16,9 +16,15 @@ on:
                     - v4
                     - v5                           
                 default: v1
+env:
+    MY_WORKFLOW_VAR: "workflow"
+    MY_OVERWRITTEN_VAR: "workflow"
 jobs:
     echo-data:
         runs-on: ubuntu-latest
+        env:
+            MY_JOB_VAR: "This is a job-level variable"
+            MY_OVERWRITTEN_VAR: "job"
         steps:
             - name: Display Information
               run: |
@@ -33,6 +39,15 @@ jobs:
             - name: Retrieve Variable
               run: |
                 echo "The value of the variable is: ${{ vars.MY_VAR  }}"
-
+            - name: Display Environment Variables
+              env:
+                MY_OVERWRITTEN_VAR: "step"                 
+              run: |
+                echo "Workflow env: ${{ env.MY_WORKFLOW_VAR }}"            
+                echo "Overwritten env: ${{ env.MY_OVERWRITTEN_VAR }}"
+            - name: Display Environment Variables            
+              run: |
+                echo "Workflow env: ${{ env.MY_WORKFLOW_VAR }}"            
+                echo "Overwritten env: ${{ env.MY_OVERWRITTEN_VAR }}"
 
             
