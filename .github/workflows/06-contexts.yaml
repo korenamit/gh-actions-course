@@ -1,5 +1,5 @@
 name: 06 - Contexts
-run-name: 06 - Contexts | DEBUG - ${{inputs.debug}}
+run-name: 06 - Contexts | DEBUG - ${{inputs.debug}} | Version - ${{inputs.version}}
 on:
     push:
     workflow_dispatch:
@@ -7,6 +7,12 @@ on:
             debug:
                 type: boolean
                 default: false
+            version:
+                type: choice
+                options:
+                    - v1
+                    - v2
+                default: v1
 jobs:
     echo-data:
         runs-on: ubuntu-latest
