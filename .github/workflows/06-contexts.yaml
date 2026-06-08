@@ -8,11 +8,8 @@ on:
                 type: boolean
                 default: false
             version:
-                type: choice
-                options:
-                    - v1
-                    - v2
-                default: v1
+                type: string                
+                default: "v1"
 jobs:
     echo-data:
         runs-on: ubuntu-latest
