@@ -1,7 +1,6 @@
 name: 06 - Contexts
 run-name: 06 - Contexts | DEBUG - ${{inputs.debug}} | Version - ${{inputs.version}}
-on:
-    push:
+on:    
     workflow_dispatch:
         inputs:
             debug:
