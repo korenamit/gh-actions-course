@@ -7,7 +7,7 @@ on:
 env:
     WORKFLOW_VAR: "I am a workflow-level environment variable"
     OVERWRITTEN: "I will be overwritten"
-    UNDEFINED_VAR_WITH_DEFAULT: ${{vars.UNDEFINED_VAR || 'I AM DEFAULT VALUE FOR UNDEFINED'}}"
+    UNDEFINED_VAR_WITH_DEFAULT: ${{vars.UNDEFINED_VAR || 'I AM DEFAULT VALUE FOR UNDEFINED'}}
 jobs:
     echo:
         runs-on: ubuntu-latest
