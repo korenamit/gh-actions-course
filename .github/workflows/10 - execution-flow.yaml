@@ -16,8 +16,7 @@ jobs:
                 echo "Linting and building the project..."
 
     unit-test:
-        runs-on: ubuntu-latest
-        continue-on-error: true
+        runs-on: ubuntu-latest        
         steps:
             - name: Running Unit Tests
               run: |
