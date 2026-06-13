@@ -6,6 +6,7 @@ on:
 jobs:
     echo1:
         runs-on: ubuntu-latest
+        environment: delayed-execution
         steps:
             - name: Failing Step
               run: |
