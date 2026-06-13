@@ -2,7 +2,6 @@
 name: 08 - Using Variables
 
 on:
-    push:
     workflow_dispatch:       
 env:
     WORKFLOW_VAR: "I am a workflow-level environment variable"
