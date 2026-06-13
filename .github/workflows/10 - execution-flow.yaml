@@ -13,13 +13,13 @@ jobs:
         steps:
             - name: Lint and Build
               run: |
-                echo: "Linting and building the project..."
+                echo "Linting and building the project..."
     unit-test:
         runs-on: ubuntu-latest
         steps:
             - name: Running Unit Tests
               run: |
-                echo: "Running unit tests..."
+                echo "Running unit tests..."
             - name: Failing Unit Tests
               if: ${{ !inputs.pass-unit-tests }}
               run: |
@@ -49,7 +49,4 @@ jobs:
     deploy-prod:
         runs-on: ubuntu-latest
         needs: [e2e-tests, load-tests]
-        steps:
-            - name: Deploying to Prod
-              run: |
-                echo "Deploying to production environment..."
+        
