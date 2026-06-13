@@ -6,10 +6,10 @@ on:
 jobs:
     echo1:
         runs-on: ubuntu-latest
-        environment: delayed-execution
         steps:
             - name: Failing Step
               run: |
+                sleep 30
                 echo "This step will fail"
                 exit 1
             - name: This step will be skipped
