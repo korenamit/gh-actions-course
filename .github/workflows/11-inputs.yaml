@@ -2,7 +2,7 @@ name: 11 - Working with Inputs
 on:
     workflow_dispatch:
         inputs:
-           dry-run: # Allows to inspect output and potential changes without implementing or committing.
+            dry-run: # Allows to inspect output and potential changes without implementing or committing.
                 type: boolean
                 description: 'Skip deployment and only print build output'
                 default: false
