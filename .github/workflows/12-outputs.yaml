@@ -23,9 +23,9 @@ jobs:
               run: echo "status=${{ inputs.build-status }}" >> $GITHUB_OUTPUT
     deploy:
         runs-on: ubuntu-latest
+        if: ${{ needs.build.outputs.build-status == 'success' }}
         needs: build
         steps:
             - name: Deploy
-              if: ${{ needs.build.outputs.build-status == 'success' }}
               run: |
                 echo "Deploying to production environment..."
