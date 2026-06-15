@@ -12,6 +12,8 @@ jobs:
         runs-on: ubuntu-latest
         outputs:
             build-status: ${{ steps.build-step.outputs.status }}    
+            output1: ${{ steps.build-step.outputs.output1 }}
+            output2: ${{ steps.build-step.outputs.output2 }}
         steps:
             - name: Print GITHUUB_OUTPUT path
               run: echo "$GITHUB_OUTPUT"
@@ -26,6 +28,8 @@ jobs:
                 echo "output1=value1" >> $GITHUB_OUTPUT
                 echo "output2=value2" >> $GITHUB_OUTPUT
                 cat "$GITHUB_OUTPUT"
+                echo "mistake=true" > $GITHUB_OUTPUT
+                cat "$GITHUB_OUTPUT"
     deploy:
         runs-on: ubuntu-latest
         if: ${{ needs.build.outputs.build-status == 'success' }}
@@ -34,3 +38,7 @@ jobs:
             - name: Deploy
               run: |
                 echo "Deploying to production environment..."
+            - name: Print Outputs
+              run: |               
+                echo "Output 1: ${{ needs.build.outputs.output1 }}"
+                echo "Output 2: ${{ needs.build.outputs.output2 }}"
