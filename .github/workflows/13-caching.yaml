@@ -29,7 +29,15 @@ jobs:
               with:
                 node-version: ${{inputs.node-version}}
             #2. Install dependencies
+            - name: Download Cached Dependencies
+              uses: actions/cache@v3
+              if: ${{ inputs.use-cache}}
+              id: cache
+              with:
+                path: 13-caching/react-app/node_modules
+                key: deps-node-modules-${{hashFiles('13-caching/react-app/package-lock.json')}}
             - name: Install Dependencies
+              if: steps.cache.outputs.cache-hit != 'true'
               run: npm ci # Clean Install:  completely wipe your existing node modules and install dependencies cleanly and exactly.
             #3. Unit Testing, Building 
             - name: Testing
