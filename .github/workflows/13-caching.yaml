@@ -6,6 +6,14 @@ on:
                 type: boolean
                 description: 'whether to execute caching step or not'                
                 default: true
+            node-version:
+                description: Node Version
+                type: choice
+                options: 
+                    - 24.x
+                    - 23.x
+                default: 23.x
+
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -19,7 +27,7 @@ jobs:
             - name: Setup Node
               uses: actions/setup-node@v6
               with:
-                node-version: '24.x'
+                node-version: ${{inputs.node-version}}
             #2. Install dependencies
             - name: Install Dependencies
               run: npm ci # Clean Install:  completely wipe your existing node modules and install dependencies cleanly and exactly.
