@@ -1,0 +1,41 @@
+name: 13 - Using Caching
+on:
+    workflow_dispatch:
+        inputs:
+            use-cache:
+                type: boolean
+                description: 'whether to execute caching step or not'                
+                default: true
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: 13-caching/react-app
+        steps:
+            #1. Checkout the code
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Setup Node
+              uses: actions/setup-node@v3
+              with:
+                node-version: '20.x'
+            #2. Install dependencies
+            - name: Install Dependencies
+              run: npm ci # Clean Install:  completely wipe your existing node modules and install dependencies cleanly and exactly.
+            #3. Unit Testing, Building 
+            - name: Testing
+              run: npm run test
+            - name: Building
+              run: npm run build
+            #4. Deploy to non-prod environment
+            - name: Deploying to nonprod
+              run: echo "Deploying to nonprod environment..."
+    caching:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Cache Node Modules
+              uses: actions/cache@v3
+              with:
+                path: node_modules
+                key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
