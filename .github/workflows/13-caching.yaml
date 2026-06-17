@@ -19,7 +19,7 @@ jobs:
             - name: Setup Node
               uses: actions/setup-node@v3
               with:
-                node-version: '20.x'
+                node-version: '24.x'
             #2. Install dependencies
             - name: Install Dependencies
               run: npm ci # Clean Install:  completely wipe your existing node modules and install dependencies cleanly and exactly.
