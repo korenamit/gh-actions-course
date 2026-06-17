@@ -31,11 +31,3 @@ jobs:
             #4. Deploy to non-prod environment
             - name: Deploying to nonprod
               run: echo "Deploying to nonprod environment..."
-    caching:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Cache Node Modules
-              uses: actions/cache@v3
-              with:
-                path: node_modules
-                key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
