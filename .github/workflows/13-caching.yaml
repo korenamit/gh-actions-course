@@ -10,9 +10,9 @@ on:
                 description: Node Version
                 type: choice
                 options: 
-                    - 24.x
-                    - 23.x
-                default: 23.x
+                    - 24.15.0
+                    - 23.15.0
+                default: 24.15.0
 
 jobs:
     build:
