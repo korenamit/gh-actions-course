@@ -30,7 +30,7 @@ jobs:
                 node-version: ${{inputs.node-version}}
             #2. Install dependencies
             - name: Download Cached Dependencies
-              uses: actions/cache@v3
+              uses: actions/cache@v5
               if: ${{ inputs.use-cache}}
               id: cache
               with:
