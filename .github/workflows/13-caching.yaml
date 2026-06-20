@@ -21,16 +21,16 @@ jobs:
         run:
           working-directory: 13-caching/react-app
     outputs: 
+      
+      
       deps-cache-key: ${{steps.cache-key.outputs.CACHE_KEY}}
-    steps:
-      #1. Checkout the code
+    steps:      
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: ${{inputs.node-version}}
-      #2. Install dependencies
       - name: Calculate Cache Key
         id: cache-key
         run: |
@@ -52,14 +52,12 @@ jobs:
         run:
             working-directory: 13-caching/react-app
     steps:
-        #1. Checkout the code
         - name: Checkout code
           uses: actions/checkout@v6
         - name: Setup Node
           uses: actions/setup-node@v6
           with:
-            node-version: ${{inputs.node-version}}
-        #2. Install dependencies  
+            node-version: ${{inputs.node-version}}        
         - name: Download Cached Dependencies
           uses: actions/cache@v5
           if: ${{ inputs.use-cache}}
@@ -67,9 +65,6 @@ jobs:
           with:
             path: 13-caching/react-app/node_modules
             key:  ${{ needs.install-deps.outputs.deps-cache-key }}
-        - name: Install Dependencies Fallback
-          if: ${{ !inputs.use-cache || steps.cache.outputs.cache-hit != 'true' }}
-          run: npm ci
         #3. Unit Testing, Building 
         - name: Testing
           run: npm run test
@@ -82,26 +77,20 @@ jobs:
     defaults:
         run:
             working-directory: 13-caching/react-app
-    steps:
-        #1. Checkout the code
+    steps:        
         - name: Checkout code
           uses: actions/checkout@v6
         - name: Setup Node
           uses: actions/setup-node@v6
           with:
-            node-version: ${{inputs.node-version}}
-        #2. Install dependencies
+            node-version: ${{inputs.node-version}}        
         - name: Download Cached Dependencies
           uses: actions/cache@v5
           if: ${{ inputs.use-cache}}
           id: cache
           with:
             path: 13-caching/react-app/node_modules
-            key:  ${{ needs.install-deps.outputs.deps-cache-key }}
-        - name: Install Dependencies Fallback
-          if: ${{ !inputs.use-cache || steps.cache.outputs.cache-hit != 'true' }}
-          run: npm ci            
-        #3. Unit Testing, Building         
+            key:  ${{ needs.install-deps.outputs.deps-cache-key }}          
         - name: Building
           run: npm run build
         #4. Deploy to non-prod environment
