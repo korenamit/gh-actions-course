@@ -67,6 +67,9 @@ jobs:
           with:
             path: 13-caching/react-app/node_modules
             key:  ${{ needs.install-deps.outputs.deps-cache-key }}
+        - name: Install Dependencies Fallback
+          if: ${{ !inputs.use-cache || steps.cache.outputs.cache-hit != 'true' }}
+          run: npm ci
         #3. Unit Testing, Building 
         - name: Testing
           run: npm run test
@@ -95,6 +98,9 @@ jobs:
           with:
             path: 13-caching/react-app/node_modules
             key:  ${{ needs.install-deps.outputs.deps-cache-key }}
+        - name: Install Dependencies Fallback
+          if: ${{ !inputs.use-cache || steps.cache.outputs.cache-hit != 'true' }}
+          run: npm ci            
         #3. Unit Testing, Building         
         - name: Building
           run: npm run build
