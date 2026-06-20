@@ -15,35 +15,89 @@ on:
                 default: 24.16.0
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        defaults:
-            run:
-                working-directory: 13-caching/react-app
-        steps:
-            #1. Checkout the code
-            - name: Checkout code
-              uses: actions/checkout@v6
-            - name: Setup Node
-              uses: actions/setup-node@v6
-              with:
-                node-version: ${{inputs.node-version}}
-            #2. Install dependencies
-            - name: Download Cached Dependencies
-              uses: actions/cache@v5
-              if: ${{ inputs.use-cache}}
-              id: cache
-              with:
-                path: 13-caching/react-app/node_modules
-                key: deps-node-modules-${{hashFiles('13-caching/react-app/package-lock.json')}}
-            - name: Install Dependencies
-              if: steps.cache.outputs.cache-hit != 'true'
-              run: npm ci # Clean Install:  completely wipe your existing node modules and install dependencies cleanly and exactly.
-            #3. Unit Testing, Building 
-            - name: Testing
-              run: npm run test
-            - name: Building
-              run: npm run build
-            #4. Deploy to non-prod environment
-            - name: Deploying to nonprod
-              run: echo "Deploying to nonprod environment..."
+  install-deps:
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+          working-directory: 13-caching/react-app
+    outputs: 
+      deps-cache-key: ${{steps.cache-key.outputs.CACHE_KEY}}
+    steps:
+      #1. Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{inputs.node-version}}
+      #2. Install dependencies
+      - name: Calculate Cache Key
+        id: cache-key
+        run: |
+          echo "CACHE_KEY=deps-node-modules-${{hashFiles('13-caching/react-app/package-lock.json')}}" >> "$GITHUB_OUTPUT"
+          echo "Inside calculate cache key step of install-deps job"
+      - name: Download Cached Dependencies
+        uses: actions/cache@v5
+        if: ${{ inputs.use-cache}}
+        id: cache
+        with:
+          path: 13-caching/react-app/node_modules
+          key: ${{steps.cache-key.outputs.CACHE_KEY}}
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci # Clean Install:  completely wipe your existing node modules and install dependencies cleanly and exactly.
+  lint-test:
+    runs-on: ubuntu-latest
+    needs: install-deps
+    defaults:
+        run:
+            working-directory: 13-caching/react-app
+    steps:
+        #1. Checkout the code
+        - name: Checkout code
+          uses: actions/checkout@v6
+        - name: Setup Node
+          uses: actions/setup-node@v6
+          with:
+            node-version: ${{inputs.node-version}}
+        #2. Install dependencies  
+        - name: Download Cached Dependencies
+          uses: actions/cache@v5
+          if: ${{ inputs.use-cache}}
+          id: cache
+          with:
+            path: 13-caching/react-app/node_modules
+            key:  ${{ needs.install-deps.outputs.deps-cache-key }}
+        #3. Unit Testing, Building 
+        - name: Testing
+          run: npm run test
+        - name: Linting
+          run: echo "Linting..."
+        #4. Deploy to non-prod environment
+  build:
+    runs-on: ubuntu-latest
+    needs: install-deps
+    defaults:
+        run:
+            working-directory: 13-caching/react-app
+    steps:
+        #1. Checkout the code
+        - name: Checkout code
+          uses: actions/checkout@v6
+        - name: Setup Node
+          uses: actions/setup-node@v6
+          with:
+            node-version: ${{inputs.node-version}}
+        #2. Install dependencies
+        - name: Download Cached Dependencies
+          uses: actions/cache@v5
+          if: ${{ inputs.use-cache}}
+          id: cache
+          with:
+            path: 13-caching/react-app/node_modules
+            key:  ${{ needs.install-deps.outputs.deps-cache-key }}
+        #3. Unit Testing, Building         
+        - name: Building
+          run: npm run build
+        #4. Deploy to non-prod environment
+        
