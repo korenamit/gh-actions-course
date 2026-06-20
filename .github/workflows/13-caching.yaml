@@ -35,7 +35,6 @@ jobs:
         id: cache-key
         run: |
           echo "CACHE_KEY=deps-node-modules-${{hashFiles('13-caching/react-app/package-lock.json')}}" >> "$GITHUB_OUTPUT"
-          echo "Inside calculate cache key step of install-deps job"
       - name: Download Cached Dependencies
         uses: actions/cache@v5
         if: ${{ inputs.use-cache}}
