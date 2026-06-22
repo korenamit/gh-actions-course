@@ -26,7 +26,7 @@ jobs:
               if: steps.cache.outputs.cache-hit != 'true'
               run: npm ci
             - name: Unit Test
-              run: npm run tests
+              run: npm run test
             - name: Build Code
               run: npm run build
             - name: Upload build files
