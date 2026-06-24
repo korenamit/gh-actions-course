@@ -8,7 +8,7 @@ jobs:
         name: ${{matrix.os}}-${{matrix.node-version}}
         runs-on: ${{matrix.os}}
         strategy:
-            fail-fast: true # Default, if one job fails in the matrix, all other jobs are skipped.
+            fail-fast: false # Default=true, if one job fails in the matrix, all other jobs are skipped.
             matrix:
                 node-version: [18.x, 20.x, 21.x]
                 os: [ubuntu-latest, windows-latest]
