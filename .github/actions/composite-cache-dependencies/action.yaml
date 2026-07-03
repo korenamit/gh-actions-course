@@ -10,7 +10,7 @@ inputs:
   working-dir:
     description: The working directory of the application
     default: '.'
-    required: false
+    required: true
   
 
 runs:
@@ -30,3 +30,4 @@ runs:
       if: steps.cache.outputs.cache-hit != 'true'
       run: npm ci
       shell: bash
+      working-directory: ${{ inputs.working-dir}}
