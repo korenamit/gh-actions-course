@@ -1,2 +1,6 @@
 name: Update NPM Dependencies
 description: This action allows to update NPM dependencies based on the package*.json file.
+
+runs:
+  using: node24
+  main: index.js
