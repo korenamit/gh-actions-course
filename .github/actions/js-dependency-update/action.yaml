@@ -2,5 +2,5 @@ name: Update NPM Dependencies
 description: Checks if there are updates to NPM packages, and creates a PR with the updated package*.json file.
 
 runs:
-  using: node24
+  using: node21
   main: index.js
