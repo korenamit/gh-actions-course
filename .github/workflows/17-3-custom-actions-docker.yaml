@@ -1,16 +1,17 @@
 name: 17 - 3 - Custom Actions - Docker
-run-name: 17 - 3 - Custom Actions - Docker 
+run-name: 17 - 3 - Custom Actions - Docker
 on:
     workflow_dispatch:
         inputs:
             url:
                 type: string
-                default: "https://www.google.com"
-         
+                default: 'https://www.google.com'
 jobs:
-    dependency-update:
+    ping-url:
         runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v4
-          - name: Check for dependency updates
-            uses: ./.github/actions/js-dependency-update
+          - name: Ping URL
+            uses: ./.github/actions/docker-ping-url
+            with:
+                url: ${{ github.event.inputs.url }}
