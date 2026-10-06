@@ -1,0 +1,19 @@
+name: C# - Docker Example
+description: 'A simple example of a C# action running in a Docker container'
+
+inputs:
+  url:
+    description: ' A sample input for the action '
+    required: true
+  max_trials:
+    description: 'Maximum number of trials until action fails'
+    required: false
+    default: 10
+  delay:
+    description: 'Delay in seconds between trials'
+    required: false
+    default: 5
+  
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
