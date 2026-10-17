@@ -38,8 +38,10 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
-            - name: Check PR title
+            - name: Check PR title contents
               uses: ./.github/actions/security-safe-input
               with: 
                 pr-title: ${{ github.event.pull_request.title }}
+
+
               
